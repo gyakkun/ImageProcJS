@@ -114,7 +114,8 @@ function mediancut( src, n ) {
     inColors = tmp;
 
     // build the mean cut tree
-    var root = new BoundingBox( inColors );
+    // var root = new BoundingBox( inColors );
+    var root = BoundingBox( inColors );
     var Q = [];
     Q.push(root);
 

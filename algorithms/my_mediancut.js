@@ -80,7 +80,6 @@ function getMeanColor(colorArray){
         g: parseInt(colorBack.g/origLen),
         b: parseInt(colorBack.b/origLen)
     }
-    
 }
 
 function sleep(numMs) {
@@ -163,19 +162,27 @@ function mediancut(src, n) {
     var colorMap = [];
     var colorBack = [];
     var twoBox = {};
+    var colorQueue = [];
     
     colorBack = getColorArrayFromImage(src);
-    twoBox = split(colorBack);
+    colorQueue.push(colorBack);
     
-    console.log(getMeanColor(twoBox.left),getMeanColor(twoBox.right));
+    while(colorQueue.length < trueN ) {
+
+        var top = colorQueue[0];
+        colorQueue.shift();  //remove the top element from array
+
+        var children = split(top);
+
+        colorQueue.push(children.left);
+        colorQueue.push(children.right);
+    }
+
+    colorQueue.forEach(function(ele){
+        colorMap.push(getMeanColor(ele));
+    });
     
-    var lc = getMeanColor(twoBox.left);
-    var rc = getMeanColor(twoBox.right);
-    
-    colorMap = [];
-    colorMap.push(lc);
-    colorMap.push(rc);
-    
+    console.log(colorMap);
     return colorMap;
 
 }
