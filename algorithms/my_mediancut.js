@@ -20,18 +20,6 @@
     }
 } */
 
-//utility functions:
-
-/* rbg2hex(color obj){
-    return string(#rrggbb)
-}
- */
-
-/* hex2rgb(string hex){
-    return color obj;
-}
-*/
-
 function getColorArrayFromImage(srcImg){
     var max = {r: 0, g: 0, b: 0};
     var min = {r: 255, g: 255, b: 255};
@@ -50,15 +38,6 @@ function getColorArrayFromImage(srcImg){
             min.g = Math.min(tmpColor.g, min.g);
             min.b = Math.min(tmpColor.b, min.b);
             
-            //Stringfy the color, add weight in palette
-            var tmpHex = rgb2hex(tmpColor);
-            if (palette[tmpHex]) {
-                palette[tmpHex]++;
-            } else {
-                palette[tmpHex] = 1;
-            }
-            //console.log(tmpHex);
-            //sleep(100);
             colorBack.push(tmpColor);
         }
     }
@@ -75,20 +54,11 @@ function getMeanColor(colorArray){
         colorBack.g += colorArray[len].g;
         colorBack.b += colorArray[len].b;
     }
+    
     return {
         r: parseInt(colorBack.r/origLen),
         g: parseInt(colorBack.g/origLen),
         b: parseInt(colorBack.b/origLen)
-    }
-}
-
-function sleep(numMs) {
-    var now = new Date();
-    var exitTime = now.getTime() + numMs;
-    while (true) {
-        now = new Date();
-        if (now.getTime() > exitTime)
-            return;
     }
 }
 
@@ -98,7 +68,6 @@ function split(colorArray){
     var max = {r: 0,g: 0,b: 0};
     var min = {r: 255,g: 255,b: 255};
     
-    //console.log(src.getPixel(1,1));   //RGBA 4 channels
     colorArray.forEach(function(tmpColor){
         
             max.r = Math.max(tmpColor.r, max.r);
@@ -109,12 +78,8 @@ function split(colorArray){
             min.g = Math.min(tmpColor.g, min.g);
             min.b = Math.min(tmpColor.b, min.b);
             
-            //console.log(tmpHex);
-            //sleep(100);
             colorBack.push(tmpColor);
     })
-
-    //console.log(palette);
     
     range = {
         r: max.r - min.r,
