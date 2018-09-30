@@ -2,7 +2,7 @@
  * Created by Peihong Guo on 11/28/13.
  */
 var algorithms = {};
-require(["algorithms/mediancut",
+require(["algorithms/my_mediancut",
     "algorithms/kmeans",
     "algorithms/neuralnetwork",
     "algorithms/filterfactory"],
