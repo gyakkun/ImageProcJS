@@ -37,16 +37,20 @@
 function getMeanColor(colorArray){
     var len = colorArray.length;
     var origLen = colorArray.length;
-    var colorBack = {};
+    var colorBack = {
+        r : 0,
+        g : 0,
+        b : 0,
+    };
     while(len--) {
         colorBack.r += colorArray[len].r;
         colorBack.g += colorArray[len].g;
         colorBack.b += colorArray[len].b;
     }
-    return color {
-        r: colorBack.r/origLen,
-        g: colorBack.g/origLen,
-        b: colorBack.b/origLen
+    return {
+        r: parseInt(colorBack.r/origLen),
+        g: parseInt(colorBack.g/origLen),
+        b: parseInt(colorBack.b/origLen)
     }
     
 }
@@ -101,7 +105,7 @@ function mediancut(src, n) {
             }
             //console.log(tmpHex);
             //sleep(100);
-            //colorBack.push(tmpColor);
+            colorBack.push(tmpColor);
         }
     }
     //console.log(palette);
@@ -111,6 +115,8 @@ function mediancut(src, n) {
         g: max.g - min.g,
         b: max.b - min.b
     };
+    
+    console.log("Range: ", range);
     
     if(range.r < range.g){
         if(range.b < range.g)
@@ -124,11 +130,28 @@ function mediancut(src, n) {
             maxRangeColor = "r";
     }
     
-    switch
+    console.log("MaxRangeColor is ", maxRangeColor);
     
-    colorBack.push(max);
-    colorBack.push(min);
+    colorBack.sort(function(color1, color2){
+            return color1[maxRangeColor] - color2[maxRangeColor];
+        }
+    )
     
+    var colorLeft = colorBack.slice(0,colorBack.length/2);
+    var colorRight = colorBack.slice(colorBack.length/2);
+    
+    //console.log(colorLeft);
+    //console.log(colorRight);
+    
+    console.log(getMeanColor(colorLeft),getMeanColor(colorRight));
+    
+    var lc = getMeanColor(colorLeft);
+    var rc = getMeanColor(colorRight);
+
+    
+    colorBack = [];
+    colorBack.push(lc);
+    colorBack.push(rc);
     
     return colorBack;
 
